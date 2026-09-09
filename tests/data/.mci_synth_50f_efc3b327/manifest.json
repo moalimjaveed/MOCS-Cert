@@ -1,0 +1,41 @@
+{
+  "atom_groups": {
+    "0": [
+      0
+    ],
+    "1": [
+      1
+    ]
+  },
+  "block_size_frames": 10,
+  "box_dimensions_angstrom": [
+    80.0,
+    80.0,
+    80.0
+  ],
+  "files": {
+    "blocks_bin": {
+      "path": "blocks.bin",
+      "sha256": "6467f15dbcf0eb7a9d5b6d651c7d7f6e2cd4d4d2a374ab33d10d282684b30c13",
+      "size_bytes": 640
+    },
+    "frame_offsets_bin": {
+      "path": "frame_offsets.bin",
+      "sha256": "af50e06a0dd24cfedb9b8618fd3e5a0082092a7e4c81bf947f1b2d5faa42e6a3",
+      "size_bytes": 80
+    }
+  },
+  "format": "AABB-L1-BINARY-64",
+  "mci_index_hash": "2eb5c8a2fbdaee512486336a6d8219a37dffd9df517a97d805b5cabcd49aa904",
+  "mci_version": "0.1.0",
+  "merkle_root": "59d427bfd293b48fc9fcd2c3b8ba3e0997d90082cac7487c4b38fef53ed7ef79",
+  "num_atom_groups": 2,
+  "num_blocks_per_group": 5,
+  "record_size_bytes": 64,
+  "timestep_ps": 10.0,
+  "topology_id": "synth_50f.gro",
+  "topology_sha256": "c5faae0fb8f8fbe314f078c6c37825de00de90424f15f51213e5318586404688",
+  "total_frames": 50,
+  "trajectory_id": "synth_50f.xtc",
+  "trajectory_sha256": "c0bd9fcc0d4f721224c56227ebb86ec576e262ae79474fb4f49201e117bfc8fc"
+}
