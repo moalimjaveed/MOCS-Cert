@@ -1,0 +1,19 @@
+{
+  "id": "QUERY 011",
+  "name": "Unsupported Continuous Physical Semantics",
+  "description": "Continuous physical persistence queries requesting guarantees for sub-frame durations (tau < dt) emit UNKNOWN with UNSUPPORTED_SEMANTICS.",
+  "query_text": "FIND (name CA) WITHIN 4.0A OF (name O2) WHERE DURATION >= 2ps",
+  "request_params": {
+    "trajectory_id": "synth_500f.xtc",
+    "pbc_mode": "orthorhombic_minimum_image",
+    "sampling_semantics": "continuous_physical",
+    "precision": "float64",
+    "quantifier": "DURATION"
+  },
+  "expected": {
+    "http_status": 200,
+    "truth_value": "UNKNOWN",
+    "resolution_status": "UNSUPPORTED_SEMANTICS",
+    "quantifier": "DURATION"
+  }
+}

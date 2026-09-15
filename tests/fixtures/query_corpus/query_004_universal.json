@@ -1,0 +1,21 @@
+{
+  "id": "QUERY 004",
+  "name": "Universal Distance Query",
+  "description": "Evaluates universal quantifier (FORALL) asserting that CA and O2 remain within 10.0 Angstroms across all 500 frames.",
+  "query_text": "FIND ALL (name CA) WITHIN 10.0A OF (name O2)",
+  "request_params": {
+    "trajectory_id": "synth_500f.xtc",
+    "pbc_mode": "orthorhombic_minimum_image",
+    "sampling_semantics": "sampled_frames",
+    "precision": "float64",
+    "quantifier": "FORALL"
+  },
+  "expected": {
+    "http_status": 200,
+    "truth_value": "TRUE",
+    "resolution_status": "COMPLETE",
+    "quantifier": "FORALL",
+    "error_code": null,
+    "certified_blocks": 50
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "QUERY 010",
+  "name": "Unsupported Triclinic Geometry",
+  "description": "Attempting execution against a triclinic simulation cell (angles 60/60/90 deg) is rejected before distance calculation with UNSUPPORTED_GEOMETRY.",
+  "query_text": "FIND (name CA) WITHIN 4.0A OF (name O2)",
+  "request_params": {
+    "trajectory_id": "tests/data/real/adk_oplsaa.xtc",
+    "pbc_mode": "orthorhombic_minimum_image",
+    "sampling_semantics": "sampled_frames",
+    "precision": "float64",
+    "quantifier": "EXISTS"
+  },
+  "expected": {
+    "http_status": 400,
+    "error_code": "UNSUPPORTED_GEOMETRY",
+    "location": "Simulation Box Geometry"
+  }
+}

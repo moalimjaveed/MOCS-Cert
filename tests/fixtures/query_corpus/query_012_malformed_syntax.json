@@ -1,0 +1,18 @@
+{
+  "id": "QUERY 012",
+  "name": "Malformed Syntax / Negative Threshold",
+  "description": "Negative distance threshold violates Euclidean non-negativity invariant, failing parser validation with PARSE_FAILED diagnostic.",
+  "query_text": "FIND (name CA) WITHIN -5.0A OF (name O2)",
+  "request_params": {
+    "trajectory_id": "synth_500f.xtc",
+    "pbc_mode": "orthorhombic_minimum_image",
+    "sampling_semantics": "sampled_frames",
+    "precision": "float64",
+    "quantifier": "EXISTS"
+  },
+  "expected": {
+    "http_status": 400,
+    "error_code": "PARSE_FAILED",
+    "location": "Query Syntax"
+  }
+}
