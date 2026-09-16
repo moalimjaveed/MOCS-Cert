@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "esnext",
+    "types": ["vite/client", "node"],
+    "allowArbitraryExtensions": true,
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": false,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Path aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@mocs/core": ["src/renderer/core/index.ts"],
+      "@mocs/core/*": ["src/renderer/core/*"],
+      "@mocs/geometry": ["src/renderer/geometry/index.ts"],
+      "@mocs/geometry/*": ["src/renderer/geometry/*"],
+      "@mocs/scene": ["src/renderer/scene/index.ts"],
+      "@mocs/scene/*": ["src/renderer/scene/*"],
+      "@mocs/render-contract": ["src/renderer/render-contract/index.ts"],
+      "@mocs/render-contract/*": ["src/renderer/render-contract/*"],
+      "@mocs/renderer-molstar": ["src/renderer/renderer-molstar/index.ts"],
+      "@mocs/renderer-molstar/*": ["src/renderer/renderer-molstar/*"],
+      "@mocs/evidence": ["src/renderer/evidence/index.ts"],
+      "@mocs/evidence/*": ["src/renderer/evidence/*"],
+      "@mocs/conformance": ["src/renderer/conformance/index.ts"],
+      "@mocs/conformance/*": ["src/renderer/conformance/*"],
+      "@mocs/loading": ["src/renderer/loading/index.ts"],
+      "@mocs/loading/*": ["src/renderer/loading/*"],
+      "@mocs/fixtures": ["src/renderer/fixtures/index.ts"],
+      "@mocs/fixtures/*": ["src/renderer/fixtures/*"]
+    },
+
+    /* Linting */
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"]
+}
