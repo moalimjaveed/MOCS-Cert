@@ -1,0 +1,44 @@
+{
+  "atom_groups": {
+    "0": [
+      4
+    ],
+    "1": [
+      21
+    ]
+  },
+  "block_size_frames": 10,
+  "box_dimensions_angstrom": [
+    80.01700592041016,
+    80.01700592041016,
+    80.01700592041016,
+    59.99999999999999,
+    59.99999999999999,
+    90.0
+  ],
+  "files": {
+    "blocks_bin": {
+      "path": "blocks.bin",
+      "sha256": "6cfcf9bba5b2d7d0c2fc4ca924c62881dd07cfedb2f0820bc00cfae26d12f411",
+      "size_bytes": 128
+    },
+    "frame_offsets_bin": {
+      "path": "frame_offsets.bin",
+      "sha256": "483ce2f0d20e50a89a4cc74dd20baf0d5988900a876984c6a54c11491b151f27",
+      "size_bytes": 16
+    }
+  },
+  "format": "AABB-L1-BINARY-64",
+  "mci_index_hash": "03e55333e028d0bad8813908a380f76d19f3a4c70975aca150098f750e62469c",
+  "mci_version": "0.1.0",
+  "merkle_root": "23ab8bd0b48d9dab193393bb4fa824a26935b062a1274b310a5ba7f9f2610265",
+  "num_atom_groups": 2,
+  "num_blocks_per_group": 1,
+  "record_size_bytes": 64,
+  "timestep_ps": 100.00000762939453,
+  "topology_id": "adk_oplsaa.gro",
+  "topology_sha256": "6c73737e2231da4f55ebb35ddca073af59f7f7e04cd8211857a1f94ba31f9c43",
+  "total_frames": 10,
+  "trajectory_id": "adk_oplsaa.xtc",
+  "trajectory_sha256": "64684e9b45de961920d38e42ecddd191a38965a41273e52a8c5936dd9e211d1e"
+}
