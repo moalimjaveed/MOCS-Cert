@@ -8,6 +8,7 @@ import threading
 from typing import Optional, List, Tuple
 import numpy as np
 import MDAnalysis as mda
+from mocs.bounds.periodic_cell import PeriodicCell
 from mocs.io.source import TrajectorySource
 from mocs.exceptions import MOCSFileNotFoundError
 

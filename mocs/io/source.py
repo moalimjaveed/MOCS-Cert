@@ -4,6 +4,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Optional, List, Tuple
 import numpy as np
+from mocs.bounds.periodic_cell import PeriodicCell
 
 class TrajectorySource(ABC):
     """
@@ -30,20 +31,19 @@ class TrajectorySource(ABC):
         """Returns simulation box dimensions in Angstroms."""
         pass
 
-    def get_cell(self, frame_idx: Optional[int] = None) -> "PeriodicCell":
+    def get_cell(self, frame_idx: Optional[int] = None) -> PeriodicCell:
         """Returns the PeriodicCell for the trajectory (or specific frame)."""
-        from mocs.bounds.periodic_cell import PeriodicCell
         return PeriodicCell.from_dimensions(self.get_box())
 
     def has_dynamic_cell(self) -> bool:
         """Returns True if the simulation unit cell fluctuates across frames."""
         return False
 
-    def read_frame_cell(self, frame_idx: int) -> "PeriodicCell":
+    def read_frame_cell(self, frame_idx: int) -> PeriodicCell:
         """Returns the PeriodicCell for a specific frame index."""
         return self.get_cell(frame_idx)
 
-    def read_block_cells(self, frame_start: int, frame_end_exclusive: int) -> List["PeriodicCell"]:
+    def read_block_cells(self, frame_start: int, frame_end_exclusive: int) -> List[PeriodicCell]:
         """Returns a list of PeriodicCell instances across a block of frames."""
         return [self.read_frame_cell(k) for k in range(frame_start, frame_end_exclusive)]
 

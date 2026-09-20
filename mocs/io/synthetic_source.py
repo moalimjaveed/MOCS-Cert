@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 from typing import Optional, List, Dict
 import numpy as np
+from mocs.bounds.periodic_cell import PeriodicCell
 from mocs.io.source import TrajectorySource
 
 class SyntheticTrajectorySource(TrajectorySource):
@@ -19,15 +20,13 @@ class SyntheticTrajectorySource(TrajectorySource):
         timestep_ps: float = 10.0,
         atom_names: Optional[List[str]] = None,
         residue_names: Optional[List[str]] = None,
-        per_frame_cells: Optional[List["PeriodicCell"]] = None,
+        per_frame_cells: Optional[List[PeriodicCell]] = None,
     ):
         if coordinates.ndim != 3 or coordinates.shape[2] != 3:
             raise ValueError(f"Coordinates array must have shape (n_frames, n_atoms, 3), got {coordinates.shape}")
         self.coordinates = coordinates.astype(np.float64)
         self.timestep_ps = float(timestep_ps)
         self.n_frames, self.n_atoms, _ = coordinates.shape
-
-        from mocs.bounds.periodic_cell import PeriodicCell
 
         self._per_frame_cells: Optional[List[PeriodicCell]] = None
         box_arr = np.asarray(box, dtype=np.float64)
