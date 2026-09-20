@@ -106,7 +106,8 @@ class MOCSSession:
                             pass
                         sidecar_dir = default_mocs
                         is_valid_default = True
-                except Exception:
+                except (OSError, json.JSONDecodeError, ValueError, KeyError):
+                    # Corrupted or incompatible existing manifest; fall back to rebuild
                     pass
             if not is_valid_default:
                 sidecar_dir = os.path.join(os.path.dirname(self.trajectory_path) or ".", f".mci_{traj_name}_{sel_hash}_bs{block_size}")

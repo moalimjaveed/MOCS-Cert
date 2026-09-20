@@ -14,11 +14,11 @@ def test_cors_rejects_wildcard_origins_with_credentials():
 
 def test_environment_overrides_are_applied(monkeypatch):
     monkeypatch.setenv("MOCS_CORS_ORIGINS", "https://studio.example, https://admin.example")
-    monkeypatch.setenv("MOCS_DEFAULT_HOST", "0.0.0.0")
+    monkeypatch.setenv("MOCS_DEFAULT_HOST", "0.0.0.0")  # nosec B104 - testing env override handling
     monkeypatch.setenv("MOCS_DEFAULT_PORT", "9000")
 
     settings = Settings.from_environment()
 
     assert settings.CORS_ORIGINS == ["https://studio.example", "https://admin.example"]
-    assert settings.DEFAULT_HOST == "0.0.0.0"
+    assert settings.DEFAULT_HOST == "0.0.0.0"  # nosec B104 - asserting env override result
     assert settings.DEFAULT_PORT == 9000

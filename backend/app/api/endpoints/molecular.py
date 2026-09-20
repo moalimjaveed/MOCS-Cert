@@ -186,6 +186,11 @@ def get_molecular_structure(
         return Response(content=content, media_type=media_type, headers=headers)
 
     # 4. Upstream network fetch with concurrency limit (P2-2) & bounded download
+    parsed_url = urllib.parse.urlparse(upstream_url)
+    allowed_hosts = {"models.rcsb.org", "files.rcsb.org", "alphafold.ebi.ac.uk", "www.modelarchive.org"}
+    if parsed_url.scheme.lower() != "https" or parsed_url.netloc.lower() not in allowed_hosts:
+        raise HTTPException(status_code=400, detail="Disallowed or untrusted upstream structure destination.")
+
     acquired = DOWNLOAD_SEMAPHORE.acquire(timeout=5.0)
     if not acquired:
         raise HTTPException(status_code=503, detail="Structure download service busy. Please retry shortly.")
@@ -197,7 +202,7 @@ def get_molecular_structure(
                 "User-Agent": "MOCS-Cert/1.0 (Computational Biophysics; Certified Query Execution)"
             }
         )
-        with urllib.request.urlopen(req, timeout=DOWNLOAD_TIMEOUT_SECONDS) as resp:
+        with urllib.request.urlopen(req, timeout=DOWNLOAD_TIMEOUT_SECONDS) as resp:  # nosec B310
             content = resp.read(MAX_DOWNLOAD_BYTES + 1)
             if len(content) > MAX_DOWNLOAD_BYTES:
                 raise HTTPException(status_code=413, detail="Structure file exceeds maximum permitted size of 50 MB.")

@@ -103,7 +103,8 @@ class MDAnalysisTrajectorySource(TrajectorySource):
                             self._has_dynamic_cell = True
                             break
                 self.universe.trajectory[0]
-            except Exception:
+            except (IndexError, AttributeError, ValueError, OSError):
+                # Best-effort dynamic cell sampling; trajectory may be 0-length or non-standard format
                 pass
 
         self.frames_decoded = 0
@@ -188,7 +189,8 @@ class MDAnalysisTrajectorySource(TrajectorySource):
                 try:
                     if hasattr(self.universe.atoms, "resnames"):
                         top_resnames.update([r for r in set(self.universe.atoms.resnames) if r])
-                except Exception:
+                except (AttributeError, TypeError, ValueError):
+                    # Topology lacks resnames attribute or array contains non-hashables
                     pass
 
                 if chain_or_res and chain_or_res.upper() in top_resnames:
@@ -358,7 +360,8 @@ class MDAnalysisTrajectorySource(TrajectorySource):
                     traj = getattr(self.universe, "trajectory", None)
                     if traj is not None and hasattr(traj, "close"):
                         traj.close()
-                except Exception:
+                except (OSError, IOError, AttributeError, RuntimeError):
+                    # Reader may already be closed or does not expose a standard close method
                     pass
 
     @property

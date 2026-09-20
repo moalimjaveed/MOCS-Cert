@@ -60,10 +60,11 @@ def get_array_module(backend: str = "auto") -> Any:
 def to_host(arr: Any) -> np.ndarray:
     if isinstance(arr, np.ndarray):
         return arr
-    if hasattr(arr, "get"):
+    if hasattr(arr, "get") and callable(getattr(arr, "get", None)):
         try:
             return arr.get()
-        except Exception:
+        except (AttributeError, TypeError, ValueError, RuntimeError):
+            # Fallback to np.asarray conversion below if device array .get() fails
             pass
     try:
         return np.asarray(arr)
