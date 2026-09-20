@@ -17,7 +17,7 @@ from playwright.sync_api import sync_playwright, Page, BrowserContext, expect
 
 BASE_URL = "http://localhost:3000"
 BACKEND_URL = "http://localhost:8000"
-SCREENSHOT_DIR = os.path.abspath("extras/reports/screenshots")
+SCREENSHOT_DIR = os.path.abspath(os.path.join("docs", "audit", "screenshots"))
 
 
 @pytest.fixture(scope="module")

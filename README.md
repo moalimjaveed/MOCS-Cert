@@ -549,9 +549,9 @@ mocs-cert/
 │   ├── property/               # Hypothesis property-based testing
 │   └── unit/                   # Package import, typing cleanliness, and unit tests
 ├── docs/images/                # README banner and UI screenshots
-├── extras/verification-tools/  # Consolidated verification self-test script
 ├── test_modular_mocs.py        # 15 modular invariant checks
 ├── .gitattributes              # LF newline enforcement for coordinate files
+├── deno.json                   # Deno CI linting configuration
 ├── GATES.md                    # Release-gate status
 ├── LICENSE                     # MIT license
 └── pyproject.toml              # Python packaging and dependency declarations
@@ -652,13 +652,13 @@ Every layer of MOCS-Cert is subject to automated verification. Run these command
 | Layer | Command | Verified count | Purpose |
 |---|---|---|---|
 | **Package & typing regression** | `pytest tests/unit/test_package_imports_and_type_cleanliness.py` | **6 / 6 passed** | Clean `import mocs`, independent auditor import, Python 3.10–3.14 PEP 649 type-annotation evaluation |
-| **Python non-E2E test suite** | `pytest --ignore=tests/e2e -q` | **691 / 691 passed** | Full unit, integration, adversarial, property, and differential test suite |
+| **Python non-E2E test suite** | `pytest --ignore=tests/e2e -q` | **696 / 696 passed** | Full unit, integration, adversarial, property, and differential test suite |
 | **Modular invariants** | `python test_modular_mocs.py` | **15 / 15 passed** | Kleene logic, PBC bounds, KDOP-14, refinement non-expansion, plan selection, certificate verification |
-| **Core verification self-tests** | `python extras/verification-tools/MOCS_CERT_CONSOLIDATED_CODE.py` | **12 / 12 passed** | Standalone consolidated self-tests for algebra, bounds, and oracles |
 | **Golden query corpus** | `pytest tests/test_golden_query_corpus.py -q` | **12 / 12 passed** | Differential execution of canonical query fixtures through the FastAPI endpoint |
 | **Frontend Vitest suite** | `cd frontend && npm test -- --run` | **1,297 / 1,297 passed** (92 suites) | React components, stores, molecular parsers, render contracts, and adversarial frontend tests |
-| **Production build** | `cd frontend && npm run build` | **3,585 modules compiled** | TypeScript compilation (`tsc -b`) and Vite production bundle (0 errors) |
+| **Production build** | `cd frontend && npm run build` | **3,586 modules compiled** | TypeScript compilation (`tsc -b`) and Vite production bundle (0 errors) |
 | **Import boundaries** | `cd frontend && npm run verify:boundaries` | **0 violations** | Enforces architectural boundaries (no Three.js in active viewer, zero React in scientific core) |
+| **Deno CI linting** | `deno lint` | **0 errors** (3 files) | Continuous integration lint gate for verification scripts and workflow engine |
 
 ### Note on jsdom and WebGL in unit tests
 

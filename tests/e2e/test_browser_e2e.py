@@ -319,4 +319,4 @@ class TestBrowserE2E:
                 page.wait_for_timeout(300)
                 page.screenshot(path=os.path.join(SCREENSHOT_DIR, screenshot_file), full_page=True)
 
-        print("\nAll 8 Visual QA screenshots captured into extras/reports/screenshots/.")
+        print("\nAll 8 Visual QA screenshots captured into docs/audit/screenshots/.")
