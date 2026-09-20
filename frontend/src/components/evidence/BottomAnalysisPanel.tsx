@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import katex from 'katex';
+import DOMPurify from 'dompurify';
 import 'katex/dist/katex.min.css';
 import {
   CheckCircle2,
@@ -106,31 +107,31 @@ export const BottomAnalysisPanel: React.FC = () => {
 
   // Pre-render KaTeX formulas
   const lFormulaHtml = useMemo(() => {
-    return katex.renderToString(
+    return DOMPurify.sanitize(katex.renderToString(
       'L = \\sqrt{\\sum_{\\mu \\in \\{x,y,z\\}} \\left(\\max(0, |\\Delta c_\\mu| - (r_{a,\\mu} + r_{b,\\mu}))\\right)^2}',
       { displayMode: false, throwOnError: false }
-    );
+    ));
   }, []);
 
   const uFormulaHtml = useMemo(() => {
-    return katex.renderToString(
+    return DOMPurify.sanitize(katex.renderToString(
       'U = \\sqrt{\\sum_{\\mu \\in \\{x,y,z\\}} \\left(\\min(L_\\mu / 2, |\\Delta c_\\mu| + (r_{a,\\mu} + r_{b,\\mu}))\\right)^2}',
       { displayMode: false, throwOnError: false }
-    );
+    ));
   }, []);
 
   const aabbFormulaHtml = useMemo(() => {
-    return katex.renderToString(
+    return DOMPurify.sanitize(katex.renderToString(
       '\\mathbf{B}_k = [\\mathbf{x}_{\\min}, \\mathbf{x}_{\\max}], \\;\\; \\mathbf{c}_{k,\\mu} = \\frac{x_{\\min,\\mu} + x_{\\max,\\mu}}{2}, \\;\\; r_{k,\\mu} = \\frac{x_{\\max,\\mu} - x_{\\min,\\mu}}{2}',
       { displayMode: false, throwOnError: false }
-    );
+    ));
   }, []);
 
   const aabbPbcFormulaHtml = useMemo(() => {
-    return katex.renderToString(
+    return DOMPurify.sanitize(katex.renderToString(
       '\\Delta c_\\mu = (c_{b,\\mu} - c_{a,\\mu}) - L_\\mu \\cdot \\mathrm{round}\\left(\\frac{c_{b,\\mu} - c_{a,\\mu}}{L_\\mu}\\right)',
       { displayMode: false, throwOnError: false }
-    );
+    ));
   }, []);
 
   const certJson = useMemo(() => {

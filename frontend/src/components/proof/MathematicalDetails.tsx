@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import katex from 'katex';
+import DOMPurify from 'dompurify';
 import 'katex/dist/katex.min.css';
 import { Calculator, AlertTriangle, Layers, RefreshCw, CheckCircle } from 'lucide-react';
 import { useProofStore, useTimelineStore } from '../../store';
@@ -23,24 +24,24 @@ export const MathematicalDetails: React.FC = () => {
 
   // Pre-render KaTeX LaTeX equations safely
   const lFormulaHtml = useMemo(() => {
-    return katex.renderToString(
+    return DOMPurify.sanitize(katex.renderToString(
       'L = \\sqrt{\\sum_{\\mu \\in \\{x,y,z\\}} \\left(\\max(0, |\\Delta c_\\mu| - (r_{a,\\mu} + r_{b,\\mu}))\\right)^2}',
       { displayMode: true, throwOnError: false }
-    );
+    ));
   }, []);
 
   const uFormulaHtml = useMemo(() => {
-    return katex.renderToString(
+    return DOMPurify.sanitize(katex.renderToString(
       'U = \\sqrt{\\sum_{\\mu \\in \\{x,y,z\\}} \\left(\\min(L_\\mu / 2, |\\Delta c_\\mu| + (r_{a,\\mu} + r_{b,\\mu}))\\right)^2}',
       { displayMode: true, throwOnError: false }
-    );
+    ));
   }, []);
 
   const pbcFormulaHtml = useMemo(() => {
-    return katex.renderToString(
+    return DOMPurify.sanitize(katex.renderToString(
       '\\Delta c_\\mu = (c_{b,\\mu} - c_{a,\\mu}) - L_\\mu \\left\\lfloor \\frac{c_{b,\\mu} - c_{a,\\mu}}{L_\\mu} + 0.5 \\right\\rfloor',
       { displayMode: true, throwOnError: false }
-    );
+    ));
   }, []);
 
   const handleRefine = async () => {
