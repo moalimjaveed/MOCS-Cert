@@ -13,7 +13,7 @@ Supports:
 from __future__ import annotations
 
 import math
-from typing import Sequence, Tuple, Union
+from typing import Any, Sequence, Tuple, Union
 import numpy as np
 
 from mocs.exceptions import MOCSUnsupportedGeometryError

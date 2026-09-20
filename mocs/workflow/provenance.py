@@ -8,11 +8,11 @@ capabilities ("Where did this value come from?").
 
 from __future__ import annotations
 from dataclasses import dataclass, field
-from typing import Dict, Any, List, Optional, Set
+from typing import Dict, Any, List, Optional, Set, Tuple
 import time
 
-from .artifacts import ScientificArtifact, ArtifactType, AnalysisArtifact, ComparisonArtifact, CertificateArtifact
-from .steps import WorkflowStep, WorkflowStepType
+from .artifacts import ScientificArtifact, ArtifactType
+from .steps import WorkflowStep
 
 
 @dataclass

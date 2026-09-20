@@ -10,9 +10,6 @@ import json
 import time
 from dataclasses import dataclass, field
 from typing import Dict, Any, List, Optional
-import hashlib
-
-from .artifacts import compute_hash
 from mocs.certificates.canonical import compute_manifest_digest
 
 

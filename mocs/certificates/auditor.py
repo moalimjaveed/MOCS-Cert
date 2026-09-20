@@ -4,7 +4,7 @@ import os
 import math
 import json
 import hashlib
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Tuple
 from mocs.exceptions import (
     MOCSVerificationError,
     MOCSDataIntegrityError,
