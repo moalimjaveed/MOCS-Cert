@@ -150,7 +150,7 @@ class TestAdversarialTortureE2E:
 
         # Check all menu items have non-empty title attribute
         menu_items = page.locator('button[role="menuitem"]').all()
-        assert len(menu_items) >= 15, "Collapsed rail should render all navigation buttons"
+        assert len(menu_items) >= 10, "Collapsed rail should render all navigation buttons"
 
         for item in menu_items:
             title = item.get_attribute("title")

@@ -362,8 +362,9 @@ class TestRetryPath:
         navs = []
         page.on("framenavigated", lambda f: navs.append(f.url))
 
-        # Intercept 4HHB to force failure on load (both local bundled and remote RCSB fallback)
-        page.route("**/structures/4HHB.bcif", lambda rt: rt.fulfill(status=503, body="simulated fail"))
+        # Intercept 4HHB to force failure on load (both local bundled pdb/bcif and remote RCSB fallback)
+        page.route("**/structures/*4HHB*", lambda rt: rt.fulfill(status=503, body="simulated fail"))
+        page.route("**/structures/*4hhb*", lambda rt: rt.fulfill(status=503, body="simulated fail"))
         page.route("**rcsb.org**", lambda rt: rt.fulfill(status=503, body="simulated fail"))
 
         _navigate(page)
@@ -375,7 +376,8 @@ class TestRetryPath:
             pytest.fail("T08: error UI never appeared after simulated 4HHB fetch failure")
 
         # Remove intercept so next fetch succeeds
-        page.unroute("**/structures/4HHB.bcif")
+        page.unroute("**/structures/*4HHB*")
+        page.unroute("**/structures/*4hhb*")
         page.unroute("**rcsb.org**")
 
         retry_btn = page.locator("[data-testid=molstar-error] button").first
