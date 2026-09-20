@@ -1,0 +1,7 @@
+# Preserve exact LF line endings for molecular files across all platforms to maintain cryptographic digest integrity
+*.pdb text eol=lf
+*.gro text eol=lf
+*.xtc binary
+*.bcif binary
+*.ico binary
+*.png binary

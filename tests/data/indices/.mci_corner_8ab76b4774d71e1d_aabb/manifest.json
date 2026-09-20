@@ -1,0 +1,42 @@
+{
+  "atom_groups": {
+    "0": [
+      0
+    ],
+    "1": [
+      1
+    ]
+  },
+  "block_size_frames": 10,
+  "bounding_model": "AABB",
+  "box_dimensions_angstrom": [
+    80.0,
+    80.0,
+    80.0
+  ],
+  "files": {
+    "blocks_bin": {
+      "path": "blocks.bin",
+      "sha256": "9796b360fd37236a61c6b52dbea29a5737900038c4a559a501a9406799fd1442",
+      "size_bytes": 396
+    },
+    "frame_offsets_bin": {
+      "path": "frame_offsets.bin",
+      "sha256": "962c4e13051ab7331fd19e90de95006ac4f4ee49c834d8385821b7bc54dc2ce7",
+      "size_bytes": 48
+    }
+  },
+  "format": "AABB-L1-BINARY-64",
+  "mci_index_hash": "d76b3d95fe16a12a845d534d6c8929edd58f3bdbe60a29cedc493105db3bc50e",
+  "mci_version": "0.1.0",
+  "merkle_root": "c863e93034f239f0ee18613d69463c92f04a697b0e3b68a8324359e71480bb0a",
+  "num_atom_groups": 2,
+  "num_blocks_per_group": 3,
+  "record_size_bytes": 64,
+  "timestep_ps": 10.0,
+  "topology_id": "corner.gro",
+  "topology_sha256": "c5faae0fb8f8fbe314f078c6c37825de00de90424f15f51213e5318586404688",
+  "total_frames": 30,
+  "trajectory_id": "corner.xtc",
+  "trajectory_sha256": "ff871630079277eeb99e9f6d32fa283ffe529fcc60b250333d48428a0ab1806d"
+}

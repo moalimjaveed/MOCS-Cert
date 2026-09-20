@@ -1,0 +1,47 @@
+{
+  "atom_groups": {
+    "0": [
+      0
+    ],
+    "1": [
+      1
+    ]
+  },
+  "block_size_frames": 10,
+  "bounding_model": "KDOP14",
+  "box_dimensions_angstrom": [
+    50.0,
+    50.0,
+    50.0
+  ],
+  "files": {
+    "blocks_bin": {
+      "path": "blocks.bin",
+      "sha256": "6836fcdaab9fbf88fce72417c5179f6ee8be2b55fc948f62e03a258b09064458",
+      "size_bytes": 1036
+    },
+    "frame_offsets_bin": {
+      "path": "frame_offsets.bin",
+      "sha256": "0ff363ff265877eb38fb3026c62d16a1a6957fde54efdf1b0de0b564dc101146",
+      "size_bytes": 64
+    }
+  },
+  "format": "KDOP14-L1-BINARY-128",
+  "group_order": [
+    0,
+    1
+  ],
+  "mci_header_size_bytes": 12,
+  "mci_index_hash": "1dae1fe4c64ae3dc4e2f6a079abf2cbe242b28db8f27f9476335bcfa89b29cb7",
+  "mci_version": "0.2.0",
+  "merkle_root": "08368662fb1ebb61285f47032b6b967fdc8d7c82b7e66d3a21f73d11d85368e0",
+  "num_atom_groups": 2,
+  "num_blocks_per_group": 4,
+  "record_size_bytes": 128,
+  "timestep_ps": 10.0,
+  "topology_id": "test_part.gro",
+  "topology_sha256": "edc2b5e8876443420237a7d2a15fd8695bfa4f5fb98800fb23d31e19d9212d2d",
+  "total_frames": 40,
+  "trajectory_id": "test_part.xtc",
+  "trajectory_sha256": "edc2b5e8876443420237a7d2a15fd8695bfa4f5fb98800fb23d31e19d9212d2d"
+}

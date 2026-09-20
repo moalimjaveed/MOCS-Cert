@@ -1,0 +1,42 @@
+{
+  "atom_groups": {
+    "0": [
+      0
+    ],
+    "1": [
+      1
+    ]
+  },
+  "block_size_frames": 10,
+  "bounding_model": "AABB",
+  "box_dimensions_angstrom": [
+    80.0,
+    80.0,
+    80.0
+  ],
+  "files": {
+    "blocks_bin": {
+      "path": "blocks.bin",
+      "sha256": "14952d76074bc84c3a06987c4a1eaad1eda58a3b7e094a0f187eccf7e9dab145",
+      "size_bytes": 524
+    },
+    "frame_offsets_bin": {
+      "path": "frame_offsets.bin",
+      "sha256": "69dba271c6a46346805083b026f5de3a7e191b71c9b9c6a7f2377b6a9c313573",
+      "size_bytes": 64
+    }
+  },
+  "format": "AABB-L1-BINARY-64",
+  "mci_index_hash": "38302d4fc5fc9e632967284b7fbab09f2efdb07ac91170b1609b0a9490cd9ff0",
+  "mci_version": "0.1.0",
+  "merkle_root": "f24e988b67c77cafeeb27fbac05cf243e40567ce705fe2a27e8e78fca28bc38f",
+  "num_atom_groups": 2,
+  "num_blocks_per_group": 4,
+  "record_size_bytes": 64,
+  "timestep_ps": 10.0,
+  "topology_id": "test_boundary.gro",
+  "topology_sha256": "c5faae0fb8f8fbe314f078c6c37825de00de90424f15f51213e5318586404688",
+  "total_frames": 40,
+  "trajectory_id": "test_boundary.xtc",
+  "trajectory_sha256": "6d560e2a0ef04d08026df19fc2c7ac949660ba4c13f154a7285531b5a9185335"
+}

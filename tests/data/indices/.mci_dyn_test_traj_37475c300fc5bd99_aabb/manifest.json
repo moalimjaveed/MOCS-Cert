@@ -1,0 +1,45 @@
+{
+  "atom_groups": {
+    "0": [
+      0
+    ],
+    "1": [
+      1
+    ]
+  },
+  "block_size_frames": 10,
+  "bounding_model": "AABB",
+  "box_dimensions_angstrom": [
+    50.0,
+    55.0,
+    50.0,
+    90.0,
+    90.0,
+    90.0
+  ],
+  "files": {
+    "blocks_bin": {
+      "path": "blocks.bin",
+      "sha256": "f1fce6237569e9ba2a55e78923b68b747b2969971957ba562dbdb7dc1a5148ce",
+      "size_bytes": 396
+    },
+    "frame_offsets_bin": {
+      "path": "frame_offsets.bin",
+      "sha256": "962c4e13051ab7331fd19e90de95006ac4f4ee49c834d8385821b7bc54dc2ce7",
+      "size_bytes": 48
+    }
+  },
+  "format": "AABB-L1-BINARY-64",
+  "mci_index_hash": "25ebe7e5380e9d7eaefa36e160f31613cd64343e1c445fd172e9ca242dcef36c",
+  "mci_version": "0.1.0",
+  "merkle_root": "6db19ff5e71d8925da089983ace640343eafe613efe54bff18a1d0a24a2eca4e",
+  "num_atom_groups": 2,
+  "num_blocks_per_group": 3,
+  "record_size_bytes": 64,
+  "timestep_ps": 10.0,
+  "topology_id": "dyn_test_traj.gro",
+  "topology_sha256": "9bedf0ae97ad0bc6aba8ee32cf724eb66067e87a494631ed57566f3ea72c680d",
+  "total_frames": 30,
+  "trajectory_id": "dyn_test_traj.xtc",
+  "trajectory_sha256": "9bedf0ae97ad0bc6aba8ee32cf724eb66067e87a494631ed57566f3ea72c680d"
+}

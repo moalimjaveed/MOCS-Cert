@@ -1,0 +1,42 @@
+{
+  "atom_groups": {
+    "0": [
+      4
+    ],
+    "1": [
+      23
+    ]
+  },
+  "block_size_frames": 10,
+  "bounding_model": "AABB",
+  "box_dimensions_angstrom": [
+    52.76300048828125,
+    52.76300048828125,
+    52.76300048828125
+  ],
+  "files": {
+    "blocks_bin": {
+      "path": "blocks.bin",
+      "sha256": "7ff5d059f86252a29c4f189c09f27c90005075c24d6bd4c8fef9353e02c2bcd3",
+      "size_bytes": 140
+    },
+    "frame_offsets_bin": {
+      "path": "frame_offsets.bin",
+      "sha256": "d6dbeda266150ba4f134ad9e7d05234795a22256190917e04e44a94b6ebe8317",
+      "size_bytes": 16
+    }
+  },
+  "format": "AABB-L1-BINARY-64",
+  "mci_index_hash": "f7d49e05e90d19e4ef0de018d9758b2b734292840ab3a51be87a7a18945f9d34",
+  "mci_version": "0.1.0",
+  "merkle_root": "cdabe41f733f8dd6d063cb168353e11d2def42b696b6c8a6e8dde07139843ebe",
+  "num_atom_groups": 2,
+  "num_blocks_per_group": 1,
+  "record_size_bytes": 64,
+  "timestep_ps": 50.0,
+  "topology_id": "cobrotoxin.pdb",
+  "topology_sha256": "07570d5e4b0ac675bcaeaf309af0db1d1a269ce072df3feab67ca5afded7759d",
+  "total_frames": 3,
+  "trajectory_id": "cobrotoxin.xtc",
+  "trajectory_sha256": "878c18c843b5a18eca495c637cfeaf0d0e265d7b6bc349b093a9154e957386fd"
+}
