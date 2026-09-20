@@ -1,0 +1,22 @@
+{
+  "id": "QUERY 006",
+  "name": "Inconclusive Bounds Requiring Refinement",
+  "description": "Spatial AABB interval [L, U] for Block 41 ([3.75, 4.16]) spans threshold 3.9A, producing UNKNOWN at the index level and triggering exact frame coordinate refinement.",
+  "query_text": "FIND (name CA) WITHIN 3.9A OF (name O2)",
+  "request_params": {
+    "trajectory_id": "synth_500f.xtc",
+    "pbc_mode": "orthorhombic_minimum_image",
+    "sampling_semantics": "sampled_frames",
+    "precision": "float64",
+    "quantifier": "EXISTS"
+  },
+  "expected": {
+    "http_status": 200,
+    "truth_value": "TRUE",
+    "resolution_status": "COMPLETE",
+    "quantifier": "EXISTS",
+    "error_code": null,
+    "refined_blocks_min": 1,
+    "exact_frames_scanned_min": 10
+  }
+}

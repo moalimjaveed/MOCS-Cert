@@ -1,0 +1,18 @@
+{
+  "id": "QUERY 009",
+  "name": "Invalid Atom Selection",
+  "description": "Atom selection specifies an atom name not present in the loaded topology, triggering fail-closed rejection with INVALID_SELECTION diagnostic.",
+  "query_text": "FIND (name INVALID_XYZ) WITHIN 4.0A OF (name O2)",
+  "request_params": {
+    "trajectory_id": "synth_500f.xtc",
+    "pbc_mode": "orthorhombic_minimum_image",
+    "sampling_semantics": "sampled_frames",
+    "precision": "float64",
+    "quantifier": "EXISTS"
+  },
+  "expected": {
+    "http_status": 400,
+    "error_code": "INVALID_SELECTION",
+    "location": "Selection A"
+  }
+}

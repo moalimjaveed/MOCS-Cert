@@ -1,0 +1,23 @@
+{
+  "id": "QUERY 001",
+  "name": "Simple Single-Atom Distance",
+  "description": "Evaluates pairwise Euclidean distance between alpha carbon (name CA) and carbonyl oxygen (name O2) under 4.0 Angstrom threshold.",
+  "query_text": "FIND (name CA) WITHIN 4.0A OF (name O2)",
+  "request_params": {
+    "trajectory_id": "synth_500f.xtc",
+    "pbc_mode": "orthorhombic_minimum_image",
+    "sampling_semantics": "sampled_frames",
+    "precision": "float64",
+    "quantifier": "EXISTS"
+  },
+  "expected": {
+    "http_status": 200,
+    "truth_value": "TRUE",
+    "resolution_status": "COMPLETE",
+    "quantifier": "EXISTS",
+    "error_code": null,
+    "blocks_examined": 50,
+    "certified_blocks_min": 45,
+    "refined_blocks_min": 1
+  }
+}

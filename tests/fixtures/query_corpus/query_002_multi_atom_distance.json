@@ -1,0 +1,22 @@
+{
+  "id": "QUERY 002",
+  "name": "Multi-Atom Distance",
+  "description": "Evaluates all-pairs minimum-image Euclidean distance across 9-atom alanine group and 1-atom ligand group under 4.0 Angstrom contact threshold.",
+  "query_text": "FIND (resname ALA) WITHIN 4.0A OF (resname LIG)",
+  "request_params": {
+    "trajectory_id": "synth_500f.xtc",
+    "pbc_mode": "orthorhombic_minimum_image",
+    "sampling_semantics": "sampled_frames",
+    "precision": "float64",
+    "quantifier": "EXISTS"
+  },
+  "expected": {
+    "http_status": 200,
+    "truth_value": "TRUE",
+    "resolution_status": "COMPLETE",
+    "quantifier": "EXISTS",
+    "error_code": null,
+    "atoms_analyzed": 10,
+    "blocks_examined": 50
+  }
+}

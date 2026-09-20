@@ -1,0 +1,21 @@
+{
+  "id": "QUERY 003",
+  "name": "Existential Distance Query",
+  "description": "Evaluates existential quantifier checking whether CA and O2 come within 3.0 Angstroms at any sampled trajectory frame.",
+  "query_text": "FIND (name CA) WITHIN 3.0A OF (name O2)",
+  "request_params": {
+    "trajectory_id": "synth_500f.xtc",
+    "pbc_mode": "orthorhombic_minimum_image",
+    "sampling_semantics": "sampled_frames",
+    "precision": "float64",
+    "quantifier": "EXISTS"
+  },
+  "expected": {
+    "http_status": 200,
+    "truth_value": "TRUE",
+    "resolution_status": "COMPLETE",
+    "quantifier": "EXISTS",
+    "error_code": null,
+    "witness_intervals_present": true
+  }
+}

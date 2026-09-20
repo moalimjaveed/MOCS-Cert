@@ -1,0 +1,45 @@
+{
+  "atom_groups": {
+    "0": [
+      4
+    ],
+    "1": [
+      21
+    ]
+  },
+  "block_size_frames": 10,
+  "bounding_model": "AABB",
+  "box_dimensions_angstrom": [
+    80.01700592041016,
+    80.01700592041016,
+    80.01700592041016,
+    59.99999999999999,
+    59.99999999999999,
+    90.0
+  ],
+  "files": {
+    "blocks_bin": {
+      "path": "blocks.bin",
+      "sha256": "625a7c8cc1c24cc2fb880d4d1afb21b83c309fc56c7b579efbd061b0ce85dfbc",
+      "size_bytes": 140
+    },
+    "frame_offsets_bin": {
+      "path": "frame_offsets.bin",
+      "sha256": "d6dbeda266150ba4f134ad9e7d05234795a22256190917e04e44a94b6ebe8317",
+      "size_bytes": 16
+    }
+  },
+  "format": "AABB-L1-BINARY-64",
+  "mci_index_hash": "6332f1ed5cb3c85e3532b8be4e0f3291f854bd06d359aa3329c2c23f905550ed",
+  "mci_version": "0.1.0",
+  "merkle_root": "23ab8bd0b48d9dab193393bb4fa824a26935b062a1274b310a5ba7f9f2610265",
+  "num_atom_groups": 2,
+  "num_blocks_per_group": 1,
+  "record_size_bytes": 64,
+  "timestep_ps": 100.00000762939453,
+  "topology_id": "adk_oplsaa.gro",
+  "topology_sha256": "6c73737e2231da4f55ebb35ddca073af59f7f7e04cd8211857a1f94ba31f9c43",
+  "total_frames": 10,
+  "trajectory_id": "adk_oplsaa.xtc",
+  "trajectory_sha256": "64684e9b45de961920d38e42ecddd191a38965a41273e52a8c5936dd9e211d1e"
+}

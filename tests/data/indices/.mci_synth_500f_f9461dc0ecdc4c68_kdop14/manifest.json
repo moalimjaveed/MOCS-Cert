@@ -1,0 +1,42 @@
+{
+  "atom_groups": {
+    "0": [
+      0
+    ],
+    "1": [
+      1
+    ]
+  },
+  "block_size_frames": 10,
+  "bounding_model": "KDOP14",
+  "box_dimensions_angstrom": [
+    80.0,
+    80.0,
+    80.0
+  ],
+  "files": {
+    "blocks_bin": {
+      "path": "blocks.bin",
+      "sha256": "7a73f89ba9a845a7f5ad183e348b4a7de2c64a674836e1d0ad7bdd905bf95b18",
+      "size_bytes": 12812
+    },
+    "frame_offsets_bin": {
+      "path": "frame_offsets.bin",
+      "sha256": "5d1db7fb928afea984f043b4995233d1bf92d85c7c1fededed1f1cecbeb54a1a",
+      "size_bytes": 800
+    }
+  },
+  "format": "KDOP14-L1-BINARY-128",
+  "mci_index_hash": "5c59bdf280e8a26a9136c53ac172ae223f6f9b7ab176757b6cd103636e358bf7",
+  "mci_version": "0.1.0",
+  "merkle_root": "b3eb49f2046dc2046c896bced3fbed8494274e7cf9b259e903a351535a7a6b11",
+  "num_atom_groups": 2,
+  "num_blocks_per_group": 50,
+  "record_size_bytes": 128,
+  "timestep_ps": 10.0,
+  "topology_id": "synth_500f.gro",
+  "topology_sha256": "c5faae0fb8f8fbe314f078c6c37825de00de90424f15f51213e5318586404688",
+  "total_frames": 500,
+  "trajectory_id": "synth_500f.xtc",
+  "trajectory_sha256": "57f24aed53be04a64ef35e25f5b38764575727d07413e4ef97f4f6645e84cace"
+}
