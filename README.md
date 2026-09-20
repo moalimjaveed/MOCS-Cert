@@ -552,6 +552,7 @@ mocs-cert/
 ├── test_modular_mocs.py        # 15 modular invariant checks
 ├── .gitattributes              # LF newline enforcement for coordinate files
 ├── deno.json                   # Deno CI linting configuration
+├── DOC_MANIFEST.yaml           # Authoritative specification suite manifest
 ├── GATES.md                    # Release-gate status
 ├── LICENSE                     # MIT license
 └── pyproject.toml              # Python packaging and dependency declarations
