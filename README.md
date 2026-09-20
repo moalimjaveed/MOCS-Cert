@@ -13,13 +13,48 @@
   <img src="https://img.shields.io/badge/API-FastAPI-009688" alt="API: FastAPI">
 </p>
 
-MOCS-Cert is a **molecular dynamics (MD) trajectory query engine** for declarative spatial queries over biomolecular trajectories (GROMACS XTC, PDB, GRO, and Binary CIF inputs). It compiles distance predicates into cost-based execution plans, uses conservative spatial and temporal bounds to prune intervals that cannot satisfy a query, refines uncertain intervals to exact frame-level evaluations, and produces hash-committed evidence that an independent verification stage can check.
+MOCS-Cert is a **molecular dynamics (MD) trajectory query engine** with an interactive scientific workstation interface for declarative spatial queries over biomolecular trajectories (GROMACS XTC, PDB, GRO, and Binary CIF inputs). It compiles distance predicates into cost-based execution plans, uses conservative spatial and temporal bounds to prune intervals that cannot satisfy a query, refines uncertain intervals to exact frame-level evaluations, produces hash-committed evidence that an independent verification stage can check, and provides a web-based visual environment for inspecting structures, trajectories, and verification proofs.
 
 It is designed for **computational biophysics, structural biology, molecular simulation, and scientific-software engineering** workflows where event detection needs to be both computationally efficient and verifiable.
 
 > **Core idea:** replace indiscriminate frame-by-frame evaluation with **index-guided interval pruning + exact refinement + checkable evidence**.
 
-**Author:** Moalim Javeed · **License:** [MIT](LICENSE)
+**Author:** Moalim Javeed · **License:** [MIT](LICENSE) · **Live Preview:** [mocs-cert.moalimjaveed.workers.dev](https://mocs-cert.moalimjaveed.workers.dev/)
+
+## Live Preview
+
+A public demonstration deployment of the MOCS-Cert web interface is accessible at:
+
+[Open the MOCS-Cert Live Preview](https://mocs-cert.moalimjaveed.workers.dev/)
+
+The hosted deployment provides an interactive demonstration of the MOCS-Cert scientific workstation interface. It allows researchers, developers, reviewers, and visitors to:
+
+- Explore the MOCS-Cert workstation layout, navigational hierarchy, and operational controls
+- Interact with the declarative query editor (Monaco-based) and inspect automated execution plan compilation
+- Experience the 3D molecular visualization workspace powered by Mol* WebGL2 Canvas3D (molecular ribbons, ball-and-stick, surface representations, bounding boxes, distance calipers)
+- Interact with the dyadic timeline lattice, conservative interval pruning, and progressive block refinement workflows
+- Inspect verifiable execution evidence records, RFC 8785 canonical hashes, and execution certificates
+- Navigate dedicated workspace views including the Index Catalog, Refinement Explorer, Formal Audit, Execution Benchmarks, and Workflow Orchestration
+
+The live preview is intended to demonstrate the user experience, interface design, and analytical workflows of MOCS-Cert. It does not represent an unrestricted computational backend for production-scale molecular dynamics workloads.
+
+### Hosted environment and resource constraints
+
+The public deployment is intended for preview and interface evaluation rather than production-scale molecular dynamics workloads. It runs within a constrained hosting environment with approximately 512 MB of RAM. Computationally intensive workloads may therefore be substantially more limited than when MOCS-Cert is executed locally on appropriately provisioned hardware.
+
+> **Preview deployment:** The hosted instance is provided for interface and workflow evaluation. It runs in a constrained environment (~512 MB RAM) and is not intended to represent the performance, throughput, or maximum workload capacity of a properly provisioned local deployment.
+
+This resource limitation belongs strictly to the hosted preview deployment and does not reflect the architectural capacity, memory scaling, or algorithmic bounds of MOCS-Cert when executed in a locally provisioned environment.
+
+### Preview vs. local execution
+
+The following table distinguishes the intended purpose and operational scope of each environment:
+
+| Environment | Purpose | Scope & Capabilities | Resource Profile |
+|---|---|---|---|
+| **Live Preview** (`workers.dev`) | Interface, workflow, visualization, and general project demonstration | Pre-indexed demonstration datasets (`synth_500f`, `4HHB`), interactive query editing, Mol* rendering, certificate inspection | Constrained (~512 MB RAM) |
+| **Local Installation** | Full computational experimentation and appropriately provisioned workloads | Arbitrary GROMACS XTC / GRO / PDB trajectories, custom spatial indices (MCI, KDOP-14), unrestricted query execution | Scalable to host hardware (CPU, RAM, disk) |
+| **Development & Test Suite** | Reproducible verification, testing, and engineering validation | Automated regression suites (PyTest, Vitest), release-gate proofs, property-based tests (Hypothesis), CI validation | Standard development environment |
 
 ## At a glance
 
@@ -55,6 +90,10 @@ npm run dev
 
 ## Contents
 
+- [Live Preview](#live-preview)
+  - [Hosted environment and resource constraints](#hosted-environment-and-resource-constraints)
+  - [Preview vs. local execution](#preview-vs-local-execution)
+- [At a glance](#at-a-glance)
 - [Quick start](#quick-start)
 - [Why MOCS-Cert](#why-mocs-cert)
 - [Core capabilities](#core-capabilities)
