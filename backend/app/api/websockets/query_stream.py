@@ -17,7 +17,13 @@ async def websocket_query_stream(websocket: WebSocket):
     # P1-13: Validate origin against allowed CORS origins if origin header is provided
     origin = websocket.headers.get("origin")
     if origin and settings.CORS_ORIGINS:
-        if origin not in settings.CORS_ORIGINS:
+        is_allowed = (
+            origin in settings.CORS_ORIGINS
+            or origin.endswith(".pages.dev")
+            or origin.endswith(".workers.dev")
+            or origin.endswith(".onrender.com")
+        )
+        if not is_allowed:
             await websocket.close(code=1008, reason="CORS policy violation")
             return
 

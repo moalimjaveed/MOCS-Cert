@@ -12,7 +12,9 @@ import type { BlockLatticeItem, BlockRefineResponse } from '../types/timeline';
 import type { CertificateVerifyResponse } from '../types/certificate';
 import type { BenchmarkResponse } from '../types/benchmark';
 
-const API_BASE = '/api/v1';
+import { getApiBaseUrl } from './config';
+
+const getBase = () => getApiBaseUrl();
 
 export interface ApiErrorOptions {
   errorCode?: ExecutionErrorCode;
@@ -96,17 +98,17 @@ async function handleResponse<T>(res: Response, fallbackPrefix: string): Promise
 }
 
 export async function fetchTrajectoryMetadata(): Promise<Record<string, any>> {
-  const res = await fetch(`${API_BASE}/trajectories`);
+  const res = await fetch(`${getBase()}/trajectories`);
   return handleResponse<Record<string, any>>(res, 'Failed to fetch trajectory metadata');
 }
 
 export async function fetchBlocks(): Promise<BlockLatticeItem[]> {
-  const res = await fetch(`${API_BASE}/trajectories/blocks`);
+  const res = await fetch(`${getBase()}/trajectories/blocks`);
   return handleResponse<BlockLatticeItem[]>(res, 'Failed to fetch trajectory blocks');
 }
 
 export async function fetchBlockById(blockId: number): Promise<BlockLatticeItem> {
-  const res = await fetch(`${API_BASE}/trajectories/blocks/${blockId}`);
+  const res = await fetch(`${getBase()}/trajectories/blocks/${blockId}`);
   return handleResponse<BlockLatticeItem>(res, `Failed to fetch block ${blockId}`);
 }
 
@@ -114,7 +116,7 @@ export async function compileQuery(
   queryText: string,
   options?: Partial<QueryExecuteRequest>
 ): Promise<QueryCompileResponse> {
-  const res = await fetch(`${API_BASE}/query/compile`, {
+  const res = await fetch(`${getBase()}/query/compile`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -133,7 +135,7 @@ export async function executeQuery(
   queryText: string,
   options?: Partial<QueryExecuteRequest>
 ): Promise<QueryExecuteResponse> {
-  const res = await fetch(`${API_BASE}/query/execute`, {
+  const res = await fetch(`${getBase()}/query/execute`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -150,7 +152,7 @@ export async function executeQuery(
 }
 
 export async function refineBlock(blockId: number, subdivisionFactor: number = 2): Promise<BlockRefineResponse> {
-  const res = await fetch(`${API_BASE}/refine/block`, {
+  const res = await fetch(`${getBase()}/refine/block`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ block_id: blockId, subdivision_factor: subdivisionFactor }),
@@ -159,7 +161,7 @@ export async function refineBlock(blockId: number, subdivisionFactor: number = 2
 }
 
 export async function verifyCertificate(certificate: Record<string, any>): Promise<CertificateVerifyResponse> {
-  const res = await fetch(`${API_BASE}/certificates/verify`, {
+  const res = await fetch(`${getBase()}/certificates/verify`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ certificate, verify_hashes: true }),
@@ -168,6 +170,6 @@ export async function verifyCertificate(certificate: Record<string, any>): Promi
 }
 
 export async function fetchBenchmarks(queryId: string = 'q1'): Promise<BenchmarkResponse> {
-  const res = await fetch(`${API_BASE}/benchmarks?query_id=${encodeURIComponent(queryId)}`);
+  const res = await fetch(`${getBase()}/benchmarks?query_id=${encodeURIComponent(queryId)}`);
   return handleResponse<BenchmarkResponse>(res, 'Failed to fetch benchmarks');
 }

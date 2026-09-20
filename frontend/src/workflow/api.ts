@@ -16,10 +16,12 @@ import type {
   ReproductionResult,
 } from "./types.ts";
 
-const BASE = "/api/v1/workflow";
+import { getApiBaseUrl } from "../api/config";
+
+const getWorkflowBase = () => `${getApiBaseUrl()}/workflow`;
 
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetch(`${getWorkflowBase()}${path}`, {
     headers: { "Content-Type": "application/json", ...init?.headers },
     ...init,
   });
@@ -102,7 +104,7 @@ export async function exportWorkflow(
   workflowId: string,
   format: ExportFormat
 ): Promise<string> {
-  const res = await fetch(`${BASE}/export/${format}/${workflowId}`);
+  const res = await fetch(`${getWorkflowBase()}/export/${format}/${workflowId}`);
   if (!res.ok) throw new Error(`Export failed: ${res.statusText}`);
   return res.text();
 }

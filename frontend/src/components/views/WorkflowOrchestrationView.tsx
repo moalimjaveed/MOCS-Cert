@@ -40,12 +40,14 @@ import type {
   ScientificArtifact,
 } from "../../workflow/types";
 
+import { getApiBaseUrl } from "../../api/config";
+
 // ─── Inline micro-helpers ─────────────────────────────────────────────────────
 
-const BASE = "/api/v1/workflow";
+const getBase = () => `${getApiBaseUrl()}/workflow`;
 
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetch(`${getBase()}${path}`, {
     headers: { "Content-Type": "application/json" },
     ...init,
   });

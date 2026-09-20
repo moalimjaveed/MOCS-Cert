@@ -2,6 +2,8 @@
  * Resilient WebSocket client for live block streaming and interactive refinement.
  */
 
+import { getWsEndpoint } from './config';
+
 type MessageHandler = (data: any) => void;
 
 class WebSocketService {
@@ -23,9 +25,7 @@ class WebSocketService {
   }
 
   public connect(url?: string) {
-    const defaultProto = typeof window !== 'undefined' && window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const defaultHost = typeof window !== 'undefined' ? window.location.host : 'localhost:8000';
-    const targetUrl = url || `${defaultProto}//${defaultHost}/ws/query`;
+    const targetUrl = url || getWsEndpoint();
 
     if (this.ws && (this.ws.readyState === WebSocket.OPEN || this.ws.readyState === WebSocket.CONNECTING)) {
       return;
