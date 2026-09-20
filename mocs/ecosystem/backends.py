@@ -16,7 +16,8 @@ License Architecture:
 """
 
 from __future__ import annotations
-import subprocess
+import subprocess  # nosec B404 - Subprocess execution isolated strictly to external CLI oracle adapters
+import shutil
 import time
 import json
 import os
@@ -791,13 +792,14 @@ class PLIPOracleAdapter:
     @property
     def version(self) -> str:
         # Detect via subprocess
+        plip_bin = shutil.which("plip")
+        if not plip_bin:
+            return "not installed (GPL oracle; requires separate installation)"
         try:
-            result = subprocess.run(
-                ["plip", "--version"], capture_output=True, text=True, timeout=10
+            result = subprocess.run(  # nosec B603
+                [plip_bin, "--version"], capture_output=True, text=True, timeout=10
             )
             return result.stdout.strip() or result.stderr.strip() or "installed (version unknown)"
-        except FileNotFoundError:
-            return "not installed (GPL oracle; requires separate installation)"
         except Exception:
             return "not installed (GPL oracle; requires separate installation)"
 
@@ -822,13 +824,7 @@ class PLIPOracleAdapter:
 
     def is_available(self) -> bool:
         """Check whether PLIP CLI is reachable on the PATH."""
-        try:
-            result = subprocess.run(
-                ["plip", "--version"], capture_output=True, timeout=5
-            )
-            return result.returncode == 0
-        except Exception:
-            return False
+        return shutil.which("plip") is not None
 
     def compute_interactions(
         self,
@@ -841,7 +837,8 @@ class PLIPOracleAdapter:
 
         IMPORTANT: This method ONLY uses subprocess. It never imports PLIP directly.
         """
-        if not self.is_available():
+        plip_bin = shutil.which("plip")
+        if not plip_bin:
             return InteractionResult(
                 interaction_type="UNAVAILABLE",
                 interactions=[],
@@ -866,12 +863,12 @@ class PLIPOracleAdapter:
             )
 
         with tempfile.TemporaryDirectory() as tmpdir:
-            cmd = ["plip", "-f", pdb_path, "-x", "-o", tmpdir]
+            cmd = [plip_bin, "-f", pdb_path, "-x", "-o", tmpdir]
             if ligand_id:
                 cmd += ["--ligand", ligand_id]
 
             try:
-                proc = subprocess.run(
+                proc = subprocess.run(  # nosec B603
                     cmd, capture_output=True, text=True, timeout=timeout_seconds
                 )
                 if proc.returncode != 0:
@@ -908,30 +905,41 @@ class PLIPOracleAdapter:
                 )
 
     def _parse_plip_xml(self, output_dir: str, ligand_id: Optional[str]) -> List[AtomPair]:
-        """Parse PLIP XML report and return normalized AtomPair interactions."""
-        import xml.etree.ElementTree as ET
+        """Parse PLIP XML report and return normalized AtomPair interactions safely using defusedxml."""
+        import defusedxml.ElementTree as ET
+        from defusedxml.common import DefusedXmlException
+        from defusedxml.ElementTree import ParseError
         interactions: List[AtomPair] = []
+
+        if not os.path.isdir(output_dir):
+            return interactions
 
         for fname in os.listdir(output_dir):
             if not fname.endswith(".xml"):
                 continue
-            tree = ET.parse(os.path.join(output_dir, fname))
-            root = tree.getroot()
+            xml_path = os.path.join(output_dir, fname)
+            try:
+                tree = ET.parse(xml_path)
+                root = tree.getroot()
+            except (DefusedXmlException, ParseError, FileNotFoundError, OSError, ValueError):
+                continue
 
             for hbond in root.iter("hydrogen_bond"):
                 try:
                     donor = hbond.find("donor")
                     acceptor = hbond.find("acceptor")
+                    if donor is None or acceptor is None:
+                        continue
                     dist = float(hbond.findtext("dist_ha", "0.0"))
                     interactions.append(AtomPair(
-                        donor_chain=donor.findtext("chain", ""),
-                        donor_resname=donor.findtext("resname", ""),
-                        donor_resseq=int(donor.findtext("resnr", "0")),
-                        donor_atom=donor.findtext("atom_name", ""),
-                        acceptor_chain=acceptor.findtext("chain", ""),
-                        acceptor_resname=acceptor.findtext("resname", ""),
-                        acceptor_resseq=int(acceptor.findtext("resnr", "0")),
-                        acceptor_atom=acceptor.findtext("atom_name", ""),
+                        donor_chain=donor.findtext("chain", "") or "",
+                        donor_resname=donor.findtext("resname", "") or "",
+                        donor_resseq=int(donor.findtext("resnr", "0") or "0"),
+                        donor_atom=donor.findtext("atom_name", "") or "",
+                        acceptor_chain=acceptor.findtext("chain", "") or "",
+                        acceptor_resname=acceptor.findtext("resname", "") or "",
+                        acceptor_resseq=int(acceptor.findtext("resnr", "0") or "0"),
+                        acceptor_atom=acceptor.findtext("atom_name", "") or "",
                         distance_angstrom=dist,
                     ))
                 except (AttributeError, ValueError):
@@ -955,13 +963,14 @@ class fpocketOracleAdapter:
 
     @property
     def version(self) -> str:
+        fpocket_bin = shutil.which("fpocket")
+        if not fpocket_bin:
+            return "not installed (fpocket binary not found on PATH)"
         try:
-            result = subprocess.run(
-                ["fpocket", "--version"], capture_output=True, text=True, timeout=10
+            result = subprocess.run(  # nosec B603
+                [fpocket_bin, "--version"], capture_output=True, text=True, timeout=10
             )
             return result.stdout.strip() or "installed (version unknown)"
-        except FileNotFoundError:
-            return "not installed (fpocket binary not found on PATH)"
         except Exception:
             return "not installed"
 
@@ -984,15 +993,7 @@ class fpocketOracleAdapter:
         ]
 
     def is_available(self) -> bool:
-        try:
-            result = subprocess.run(
-                ["fpocket", "--help"], capture_output=True, timeout=5
-            )
-            return True  # fpocket --help exits non-zero but runs
-        except FileNotFoundError:
-            return False
-        except Exception:
-            return False
+        return shutil.which("fpocket") is not None
 
     def detect_pockets(
         self,
@@ -1021,17 +1022,17 @@ class fpocketOracleAdapter:
             ],
         )
 
-        if not self.is_available():
+        fpocket_bin = shutil.which("fpocket")
+        if not fpocket_bin:
             return unavailable_result
 
         with tempfile.TemporaryDirectory() as tmpdir:
-            import shutil
             pdb_copy = os.path.join(tmpdir, os.path.basename(pdb_path))
             shutil.copy2(pdb_path, pdb_copy)
 
             try:
-                proc = subprocess.run(
-                    ["fpocket", "-f", pdb_copy],
+                proc = subprocess.run(  # nosec B603
+                    [fpocket_bin, "-f", pdb_copy],
                     capture_output=True, text=True, timeout=timeout_seconds,
                     cwd=tmpdir,
                 )
@@ -1137,12 +1138,15 @@ class AutoDockVinaAdapter:
             import vina
             return vina.__version__
         except ImportError:
+            vina_bin = shutil.which("vina")
+            if not vina_bin:
+                return "not installed (optional docking backend)"
             try:
-                result = subprocess.run(
-                    ["vina", "--version"], capture_output=True, text=True, timeout=10
+                result = subprocess.run(  # nosec B603
+                    [vina_bin, "--version"], capture_output=True, text=True, timeout=10
                 )
                 return result.stdout.strip() or "installed (CLI)"
-            except FileNotFoundError:
+            except Exception:
                 return "not installed (optional docking backend)"
         except Exception:
             return "not installed (optional docking backend)"
@@ -1623,16 +1627,12 @@ class P2RankAdapter:
 
     def is_available(self) -> bool:
         """Check whether prank executable is in PATH or P2RANK_HOME."""
-        try:
-            res = subprocess.run(["prank", "--version"], capture_output=True, timeout=5)
-            return res.returncode == 0 or "p2rank" in (res.stdout.decode() + res.stderr.decode()).lower()
-        except FileNotFoundError:
-            p2rank_home = os.environ.get("P2RANK_HOME")
-            if p2rank_home and os.path.exists(os.path.join(p2rank_home, "prank")):
-                return True
-            return False
-        except Exception:
-            return False
+        if shutil.which("prank") is not None:
+            return True
+        p2rank_home = os.environ.get("P2RANK_HOME")
+        if p2rank_home and os.path.exists(os.path.join(p2rank_home, "prank")):
+            return True
+        return False
 
     def predict_pockets(
         self,
@@ -1644,17 +1644,22 @@ class P2RankAdapter:
         Execute P2Rank on a target PDB file and return ranked PocketPredictionResults.
         Fails closed with descriptive exception if prank executable is not found.
         """
-        if not self.is_available():
-            raise RuntimeError(
-                "P2Rank is not installed in current environment. "
-                "Download from https://github.com/rdk/p2rank or set P2RANK_HOME."
-            )
+        prank_bin = shutil.which("prank")
+        if not prank_bin:
+            p2rank_home = os.environ.get("P2RANK_HOME")
+            if p2rank_home and os.path.exists(os.path.join(p2rank_home, "prank")):
+                prank_bin = os.path.join(p2rank_home, "prank")
+            else:
+                raise RuntimeError(
+                    "P2Rank is not installed in current environment. "
+                    "Download from https://github.com/rdk/p2rank or set P2RANK_HOME."
+                )
 
         with tempfile.TemporaryDirectory() as tmpdir:
             out = output_dir or tmpdir
-            cmd = ["prank", "predict", "-f", pdb_path, "-o", out]
+            cmd = [prank_bin, "predict", "-f", pdb_path, "-o", out]
             try:
-                proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_seconds)
+                proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_seconds)  # nosec B603
                 if proc.returncode != 0:
                     raise RuntimeError(f"P2Rank failed with exit code {proc.returncode}: {proc.stderr}")
             except subprocess.TimeoutExpired:
@@ -2082,11 +2087,7 @@ class FoldseekAdapter:
         ]
 
     def is_available(self) -> bool:
-        try:
-            res = subprocess.run(["foldseek", "version"], capture_output=True, timeout=5)
-            return res.returncode == 0
-        except (FileNotFoundError, Exception):
-            return False
+        return shutil.which("foldseek") is not None
 
     def search(
         self,
@@ -2096,7 +2097,8 @@ class FoldseekAdapter:
         timeout_seconds: int = 120,
     ) -> StructureSearchResult:
         """Execute Foldseek easy-search and return StructureSearchResult."""
-        if not self.is_available():
+        foldseek_bin = shutil.which("foldseek")
+        if not foldseek_bin:
             raise RuntimeError(
                 "Foldseek is not installed in current environment. "
                 "Download precompiled binary from https://github.com/steineggerlab/foldseek."
@@ -2104,9 +2106,9 @@ class FoldseekAdapter:
 
         with tempfile.TemporaryDirectory() as tmpdir:
             out_m8 = os.path.join(output_dir or tmpdir, "aln.m8")
-            cmd = ["foldseek", "easy-search", query_pdb, target_db, out_m8, tmpdir]
+            cmd = [foldseek_bin, "easy-search", query_pdb, target_db, out_m8, tmpdir]
             try:
-                proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_seconds)
+                proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_seconds)  # nosec B603
                 if proc.returncode != 0:
                     raise RuntimeError(f"Foldseek search failed: {proc.stderr}")
             except subprocess.TimeoutExpired:
@@ -2223,11 +2225,7 @@ class MMseqs2Adapter:
         ]
 
     def is_available(self) -> bool:
-        try:
-            res = subprocess.run(["mmseqs", "version"], capture_output=True, timeout=5)
-            return res.returncode == 0
-        except (FileNotFoundError, Exception):
-            return False
+        return shutil.which("mmseqs") is not None
 
     def search(
         self,
@@ -2237,7 +2235,8 @@ class MMseqs2Adapter:
         timeout_seconds: int = 120,
     ) -> SequenceHomologyResult:
         """Execute MMseqs2 easy-search and return SequenceHomologyResult."""
-        if not self.is_available():
+        mmseqs_bin = shutil.which("mmseqs")
+        if not mmseqs_bin:
             raise RuntimeError(
                 "MMseqs2 is not installed in current environment. "
                 "Download precompiled binary from https://github.com/soedinglab/mmseqs2."
@@ -2245,9 +2244,9 @@ class MMseqs2Adapter:
 
         with tempfile.TemporaryDirectory() as tmpdir:
             out_m8 = os.path.join(output_dir or tmpdir, "aln.m8")
-            cmd = ["mmseqs", "easy-search", query_fasta, target_db, out_m8, tmpdir]
+            cmd = [mmseqs_bin, "easy-search", query_fasta, target_db, out_m8, tmpdir]
             try:
-                proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_seconds)
+                proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_seconds)  # nosec B603
                 if proc.returncode != 0:
                     raise RuntimeError(f"MMseqs2 search failed: {proc.stderr}")
             except subprocess.TimeoutExpired:
@@ -2374,11 +2373,7 @@ class PoseBustersAdapter:
             import posebusters  # noqa: F401
             return True
         except ImportError:
-            try:
-                res = subprocess.run(["bust", "--version"], capture_output=True, timeout=5)
-                return res.returncode == 0
-            except Exception:
-                return False
+            return shutil.which("bust") is not None
 
     def validate_pose(
         self,
