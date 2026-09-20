@@ -1,0 +1,8 @@
+{
+  "lint": {
+    "include": [
+      "frontend/scripts/",
+      "frontend/src/workflow/"
+    ]
+  }
+}

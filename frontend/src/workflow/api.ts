@@ -14,7 +14,7 @@ import type {
   LineageReport,
   ReproducibilityManifest,
   ReproductionResult,
-} from "./types";
+} from "./types.ts";
 
 const BASE = "/api/v1/workflow";
 
@@ -32,7 +32,7 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
 
 // ─── Backend Discovery ────────────────────────────────────────────────────────
 
-export async function fetchBackends(
+export function fetchBackends(
   forceRefresh = false
 ): Promise<BackendStatusRecord[]> {
   const qs = forceRefresh ? "?force_refresh=true" : "";
@@ -41,7 +41,7 @@ export async function fetchBackends(
 
 // ─── Workflow Templates ───────────────────────────────────────────────────────
 
-export async function fetchTemplates(): Promise<WorkflowTemplate[]> {
+export function fetchTemplates(): Promise<WorkflowTemplate[]> {
   return apiFetch<WorkflowTemplate[]>("/templates");
 }
 
@@ -49,7 +49,7 @@ export async function fetchTemplates(): Promise<WorkflowTemplate[]> {
 
 export type WorkflowExecutionType = "4hhb" | "1bna" | "synth_500f";
 
-export async function executeWorkflow(
+export function executeWorkflow(
   type: WorkflowExecutionType
 ): Promise<WorkflowInstance> {
   return apiFetch<WorkflowInstance>(`/execute/${type}`, { method: "POST" });
@@ -57,7 +57,7 @@ export async function executeWorkflow(
 
 // ─── Workflow Instance ────────────────────────────────────────────────────────
 
-export async function fetchWorkflow(
+export function fetchWorkflow(
   workflowId: string
 ): Promise<WorkflowInstance> {
   return apiFetch<WorkflowInstance>(`/${workflowId}`);
@@ -65,7 +65,7 @@ export async function fetchWorkflow(
 
 // ─── Provenance Graph ─────────────────────────────────────────────────────────
 
-export async function fetchProvenance(
+export function fetchProvenance(
   workflowId: string
 ): Promise<ProvenanceGraph> {
   return apiFetch<ProvenanceGraph>(`/provenance/${workflowId}`);
@@ -73,19 +73,19 @@ export async function fetchProvenance(
 
 // ─── Lineage Query ────────────────────────────────────────────────────────────
 
-export async function fetchLineage(artifactId: string): Promise<LineageReport> {
+export function fetchLineage(artifactId: string): Promise<LineageReport> {
   return apiFetch<LineageReport>(`/lineage/${artifactId}`);
 }
 
 // ─── Reproducibility Manifest ─────────────────────────────────────────────────
 
-export async function fetchManifest(
+export function fetchManifest(
   workflowId: string
 ): Promise<ReproducibilityManifest> {
   return apiFetch<ReproducibilityManifest>(`/manifest/${workflowId}`);
 }
 
-export async function reproduceFromManifest(
+export function reproduceFromManifest(
   manifest: ReproducibilityManifest
 ): Promise<ReproductionResult> {
   return apiFetch<ReproductionResult>("/reproduce", {
